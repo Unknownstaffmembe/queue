@@ -1,10 +1,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
-#include "queue.h"
+#include "uqueue.h"
 
 // local functions
-inline static int raa(struct queue_t *q) // realloc array, array, new size
+inline static int raa(struct uqueue *q) // realloc array, array, new size
 {
 	void *narr; // new array
 	unsigned long int ns; // new size
@@ -20,7 +20,7 @@ inline static int raa(struct queue_t *q) // realloc array, array, new size
 	return 0;
 }
 
-inline static void shft(struct queue_t *q) // shift array
+inline static void shft(struct uqueue *q) // shift array
 {
 	unsigned long int nt; // new tail
 	size_t s; // bytes to copy/move
@@ -36,7 +36,7 @@ inline static void shft(struct queue_t *q) // shift array
 }
 
 // global functions
-int queue_init(struct queue_t *q, unsigned long int inc, unsigned long int in, size_t ts)
+int uqueue_init(struct uqueue *q, unsigned long int in, unsigned long int inc, size_t ts)
 {
 	void *arr;
 
@@ -55,7 +55,7 @@ int queue_init(struct queue_t *q, unsigned long int inc, unsigned long int in, s
 	return 0;
 }
 
-int queue_add(struct queue_t *q, void *v)
+int uqueue_add(struct uqueue *q, void *v)
 {
 	pthread_mutex_lock(&(q->im));
 	if (q->t == q->in) {
@@ -74,7 +74,7 @@ int queue_add(struct queue_t *q, void *v)
 	return 0;
 }
 
-int queue_get(struct queue_t *q, void *vc)
+int uqueue_get(struct uqueue *q, void *vc)
 {
 	pthread_mutex_lock(&(q->rm));
 	if (q->t == q->h) return -1;

@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include "queue.h"
+#include "uqueue.h"
 #define ITERATIONS 100
 
 int main()
 {
-	struct queue_t q;
+	struct uqueue q;
 	int i, it, c;
 
 	queue_init(&q, 10, 1, sizeof(int));

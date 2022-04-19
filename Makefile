@@ -1,19 +1,19 @@
-queue.o: queue.c queue.h
-	gcc -g -c queue.c -l pthread -o queue.o
+uqueue.o: uqueue.c uqueue.h
+	gcc -g -c uqueue.c -l pthread -o uqueue.o
 
 .PHONY: release test global remove
 
-release: queue.c queue.h
-	gcc -O2 -c queue.c -l pthread -o queue.o
+release: uqueue.c uqueue.h
+	gcc -O2 -c uqueue.c -l pthread -o uqueue.o
 
-test: queue.o test.c
-	gcc -g test.c queue.o -o test.o
+test: uqueue.o test.c
+	gcc -g test.c uqueue.o -o test.o
 
 global:
-	gcc -O2 -c queue.c -l pthread -o queue.o
-	cp queue.h /usr/local/include/queue.h
-	cp queue.o /usr/local/lib/queue.o
+	gcc -O2 -c uqueue.c -l pthread -o uqueue.o
+	cp uqueue.h /usr/local/include/uqueue.h
+	cp uqueue.o /usr/local/lib/libuqueue.a
 
 remove:
-	rm /usr/local/include/queue.h
-	rm /usr/local/lib/queue.o
+	rm /usr/local/include/uqueue.h
+	rm /usr/local/lib/libuqueue.o
