@@ -62,6 +62,7 @@ int uqueue_add(struct uqueue *q, void *v)
 		if (q->h == 0) {
 			if (raa(q) == -1) {
 				pthread_mutex_unlock(&(q->im));
+				pthread_mutex_unlock(&(q->rm));
 				return -1;
 			}
 		} else {
@@ -77,7 +78,10 @@ int uqueue_add(struct uqueue *q, void *v)
 int uqueue_get(struct uqueue *q, void *vc)
 {
 	pthread_mutex_lock(&(q->rm));
-	if (q->t == q->h) return -1;
+	if (q->t == q->h) {
+		pthread_mutex_unlock(&(q->rm));
+		return -1;
+	};
 	memcpy(vc, q->arr + q->h * q->ts, q->ts);
 	q->h++;
 	pthread_mutex_unlock(&(q->rm));
